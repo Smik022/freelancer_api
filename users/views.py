@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
-
+from rest_framework import viewsets
 
 
 
@@ -25,3 +25,12 @@ def home(request):
 def all_users(request):
     users = CustomUser.objects.all().values('id', 'username', 'email')
     return JsonResponse(list(users), safe=False)
+
+
+from .serializers import FreelancerSerializer
+
+class FreelancerViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = FreelancerSerializer
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(is_freelancer=True)

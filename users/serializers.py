@@ -19,3 +19,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop('password2')
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
+class FreelancerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'bio', 'skills', 'profile_photo']  # adjust fields as needed
